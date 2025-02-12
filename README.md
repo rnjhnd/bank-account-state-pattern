@@ -87,6 +87,4 @@ public class AccountTest(){
 	//Deposit to the account
         myAccount.deposit(1000.0);// Show message "You cannot deposit on closed account!". Call the toString() to show current balance and account number.
     }
-
-    
-}
+    }
