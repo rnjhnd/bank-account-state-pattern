@@ -22,7 +22,7 @@ public class AccountTest {
         myAccount.activate(); // Displays "You cannot activate a closed account!"
 
         // Try suspending the closed account
-        myAccount.suspend(); // displays "You cannot suspend a closed account!"
+        myAccount.suspend(); // Displays "You cannot suspend a closed account!"
 
         // Try withdrawing from the closed account
         myAccount.withdraw(500.0); // Displays "You cannot withdraw on a closed account!"
