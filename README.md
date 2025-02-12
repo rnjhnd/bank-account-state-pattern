@@ -30,19 +30,19 @@ If the account is closed
 
 
 **Composition of Account:**
-attributes:
-accountNumber : String
-balance:  Double
-accountState:  AccountState
+   * attributes:
+   * accountNumber : String
+   * balance:  Double
+   * accountState:  AccountState
 
 **Methods:**
-Setter and getter methods
-deposit(Double depositAmount): void
-withdraw(Double withdrawAmount): void
-suspend(): void
-activate(): void
-close() : void
-toString()   // displays account number and balance
+   * Setter and getter methods
+   * deposit(Double depositAmount): void
+   * withdraw(Double withdrawAmount): void
+   * suspend(): void
+   * activate(): void
+   * close() : void
+   * toString() // displays account number and balance
 
 **Note:**  No if-else, switch will be used
 
