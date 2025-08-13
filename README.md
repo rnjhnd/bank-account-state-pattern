@@ -202,12 +202,6 @@ The `AccountTest` class provides comprehensive testing of:
 - ✅ Error handling for invalid operations
 - ✅ Account information display
 
-## 📚 Learning Resources
-
-- [State Pattern - Wikipedia](https://en.wikipedia.org/wiki/State_pattern)
-- [State Pattern - Refactoring Guru](https://refactoring.guru/design-patterns/state)
-- [Java Design Patterns](https://www.baeldung.com/java-design-patterns)
-
 ## 🤝 Contributing
 
 Feel free to contribute to this project by:
