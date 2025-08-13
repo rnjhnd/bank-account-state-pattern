@@ -1,86 +1,227 @@
-# Bank Account State Management
+# Bank Account State Management System
 
-A bank needs to manage different states of customer accounts, including active, suspended, and closed. Each state has specific rules and restrictions regarding allowed operations, and accounts have associated attributes like account number and balance.
-* **Active accounts:** Allow deposits and withdrawals.
-* **Suspended accounts:** Disallow deposits and withdrawals transactions, but allow viewing account information.
-* **Closed accounts:** Disallow all transactions and viewing of account information.
+A Java implementation of the **State Design Pattern** for managing bank account states with different behavioral rules and restrictions.
 
-Currently, the system relies on conditional statements within the Account class to check the account state and determine valid actions. This approach becomes cumbersome and error-prone as the number of states and their associated logic grows.
+## 📋 Overview
 
-Implement the State pattern to improve code maintainability and flexibility:
-1. **Define Account States:** Create separate classes representing different account states: ActiveState, SuspendedState, and ClosedState.
-2. **Implement State Interface:** Define an interface AccountState with methods for common actions like deposit, withdraw, activate, suspend, and close.
-3. **Implement State Behaviors:** Each concrete state class implements the AccountState interface, providing specific behavior for its respective state. For example, the ActiveState class would allow deposits and withdrawals, while the ClosedState wouldn't allow any transactions.
-4. **Update Account Class:**
-   * Include attributes for accountNumber and balance.
-   * Remove state-specific logic from the Account class.
-   * Introduce a reference to the current AccountState object.
-   * Delegate actions like deposit, withdraw, activate, suspend, and close to the current state object through its corresponding methods.
- 
-**Logic:**
+This project demonstrates how to implement the State pattern to manage different states of bank accounts (Active, Suspended, and Closed) without using conditional statements. Each state has specific rules regarding allowed operations, making the system more maintainable and extensible.
 
-If the account is active
-    You can either suspend it or close it.
-If the account is suspended
-    You can either activate or close it.
-    No deposits and withdrawals allowed.
-If the account is closed
-    You can neither suspend nor activate it.
-    No deposits and withdrawals allowed.
+## 🏗️ Architecture
 
+The system uses the **State Design Pattern** to encapsulate state-specific behavior in separate classes, eliminating the need for complex conditional logic in the main `Account` class.
 
-**Composition of Account:**
-   * attributes:
-   * accountNumber : String
-   * balance:  Double
-   * accountState:  AccountState
+### Core Components
 
-**Methods:**
-   * Setter and getter methods
-   * deposit(Double depositAmount): void
-   * withdraw(Double withdrawAmount): void
-   * suspend(): void
-   * activate(): void
-   * close() : void
-   * toString() // displays account number and balance
+- **`Account`** - The context class that maintains a reference to the current state
+- **`AccountState`** - Interface defining the contract for all state implementations
+- **`ActiveState`** - Handles behavior when account is active
+- **`SuspendedState`** - Handles behavior when account is suspended  
+- **`ClosedState`** - Handles behavior when account is closed
 
-**Note:**  No if-else, switch will be used
+## 🎯 Features
 
-Create AccountTest() class to test the Account:
+### Account States & Permissions
+
+| State | Deposit | Withdraw | Activate | Suspend | Close | View Info |
+|-------|---------|----------|----------|---------|-------|-----------|
+| **Active** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| **Suspended** | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ |
+| **Closed** | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+### State Transitions
+
+```
+Active ←→ Suspended
+   ↓        ↓
+Closed ←→ Closed
+```
+
+- **Active → Suspended**: Account can be suspended
+- **Suspended → Active**: Account can be reactivated
+- **Active/Suspended → Closed**: Account can be closed
+- **Closed**: Terminal state (no further transitions allowed)
+
+## 📁 Project Structure
+
+```
+bank-account-state-pattern/
+├── README.md
+└── src/
+    ├── Account.java          # Main account class
+    ├── AccountState.java     # State interface
+    ├── ActiveState.java      # Active state implementation
+    ├── SuspendedState.java   # Suspended state implementation
+    ├── ClosedState.java      # Closed state implementation
+    └── AccountTest.java      # Test class with examples
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Java 8 or higher
+- Any Java IDE (IntelliJ IDEA, Eclipse, VS Code, etc.)
+
+### Running the Application
+
+1. **Compile the source files:**
+   ```bash
+   javac src/*.java
+   ```
+
+2. **Run the test class:**
+   ```bash
+   java -cp src AccountTest
+   ```
+
+### Expected Output
+
+```
+Account is already activated!
+Account is suspended!
+Account is activated!
+
+Deposited 1000.0
+Account Number: 1234
+Balance: 11000.0
+
+Withdrew 100.0. 
+Account Number: 1234
+Balance: 10900.0
+
+Account is closed!
+You cannot activate a closed account!
+You cannot suspend a closed account!
+You cannot withdraw on a closed account.
+Account Number: 1234
+Balance: 10900.0
+
+You cannot deposit on a closed account.
+Account Number: 1234
+Balance: 10900.0
+```
+
+## 💻 Code Examples
+
+### Creating and Using an Account
 
 ```java
-public class AccountTest {
-    public static void main(String[] args) {
+// Create a new account (starts in Active state)
+Account account = new Account("1234", 10000.0);
 
-        Account myAccount = new Account("1234", 10000.0); // Set account to active state
-        myAccount.activate(); // Displays "Account is already activated!"
+// Perform transactions (allowed in Active state)
+account.deposit(1000.0);
+account.withdraw(500.0);
 
-        // Suspend the account
-        myAccount.suspend(); // Displays "Account is suspended!"
+// Change account state
+account.suspend();  // Active → Suspended
+account.activate(); // Suspended → Active
+account.close();    // Active → Closed
+```
 
-        // Activate the account
-        myAccount.activate(); // Displays "Account is activated!"
+### State-Specific Behavior
 
-        // Deposit to the account
-        myAccount.deposit(1000.0); // Update balance and display account number and current balance (via toString())
+```java
+// Active state allows all transactions
+account.deposit(1000.0);  // ✅ Success
+account.withdraw(500.0);  // ✅ Success
 
-        // Withdraw from the account
-        myAccount.withdraw(100.0); // Update balance and display account number and current balance (via toString())
+// Suspended state blocks transactions
+account.suspend();
+account.deposit(1000.0);  // ❌ "You cannot deposit on a suspended account"
+account.withdraw(500.0);  // ❌ "You cannot withdraw on a suspended account"
 
-        // Close the account
-        myAccount.close(); // Displays "Account is closed!"
+// Closed state blocks everything
+account.close();
+account.activate();       // ❌ "You cannot activate a closed account"
+account.deposit(1000.0);  // ❌ "You cannot deposit on a closed account"
+```
 
-        // Try activating a closed account
-        myAccount.activate(); // Displays "You cannot activate a closed account!"
+## 🔧 Implementation Details
 
-        // Try suspending a closed account
-        myAccount.suspend(); // Displays "You cannot suspend a closed account!"
+### Account Class
 
-        // Try withdrawing from a closed account
-        myAccount.withdraw(500.0); // Displays "You cannot withdraw on a closed account!" and shows account details via toString()
-
-        // Try depositing to a closed account
-        myAccount.deposit(1000.0); // Displays "You cannot deposit on a closed account!" and shows account details via toString()
+```java
+public class Account {
+    private String accountNumber;
+    private double balance;
+    private AccountState accountState;  // Current state reference
+    
+    // Methods delegate to current state
+    public void deposit(double amount) {
+        accountState.deposit(this, amount);
     }
+    
+    public void withdraw(double amount) {
+        accountState.withdraw(this, amount);
+    }
+    // ... other methods
 }
 ```
+
+### State Interface
+
+```java
+public interface AccountState {
+    void deposit(Account account, double amount);
+    void withdraw(Account account, double amount);
+    void suspend(Account account);
+    void activate(Account account);
+    void close(Account account);
+}
+```
+
+## 🎨 Design Pattern Benefits
+
+### ✅ Advantages
+
+- **Eliminates conditional statements**: No if-else or switch statements needed
+- **Single Responsibility**: Each state class handles only its specific behavior
+- **Open/Closed Principle**: Easy to add new states without modifying existing code
+- **Maintainability**: State-specific logic is isolated and easy to modify
+- **Extensibility**: New states can be added without changing the Account class
+
+### 🔄 State Transitions
+
+State transitions are handled within each state implementation:
+
+```java
+// In ActiveState
+public void suspend(Account account) {
+    account.setAccountState(new SuspendedState());
+    System.out.println("Account is suspended!");
+}
+```
+
+## 🧪 Testing
+
+The `AccountTest` class provides comprehensive testing of:
+
+- ✅ State transitions (Active ↔ Suspended → Closed)
+- ✅ Transaction permissions in each state
+- ✅ Error handling for invalid operations
+- ✅ Account information display
+
+## 📚 Learning Resources
+
+- [State Pattern - Wikipedia](https://en.wikipedia.org/wiki/State_pattern)
+- [State Pattern - Refactoring Guru](https://refactoring.guru/design-patterns/state)
+- [Java Design Patterns](https://www.baeldung.com/java-design-patterns)
+
+## 🤝 Contributing
+
+Feel free to contribute to this project by:
+
+1. Forking the repository
+2. Creating a feature branch
+3. Making your changes
+4. Adding tests for new functionality
+5. Submitting a pull request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Note**: This implementation demonstrates clean code principles and design patterns best practices. The State pattern is particularly useful when an object's behavior depends on its state and the number of states is large or frequently changing.
