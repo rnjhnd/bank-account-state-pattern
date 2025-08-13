@@ -45,14 +45,14 @@ Closed ←→ Closed
 
 ```
 bank-account-state-pattern/
-├── README.md
-└── src/
-    ├── Account.java          # Main account class
-    ├── AccountState.java     # State interface
-    ├── ActiveState.java      # Active state implementation
-    ├── SuspendedState.java   # Suspended state implementation
-    ├── ClosedState.java      # Closed state implementation
-    └── AccountTest.java      # Test class with examples
+├── src/
+│   ├── Account.java             # Main account class
+│   ├── AccountState.java        # State interface
+│   ├── ActiveState.java         # Active state implementation
+│   ├── SuspendedState.java      # Suspended state implementation
+│   ├── ClosedState.java         # Closed state implementation
+│   └── AccountTest.java         # Test class with examples
+└── README.md                    # Project documentation
 ```
 
 ## 🚀 Getting Started
