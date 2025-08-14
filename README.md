@@ -195,7 +195,7 @@ Account Number: 1234
 Balance: 10900.0
 ```
 
-## 🎯 Account States & Permissions
+## 🔐 Account States & Permissions
 
 | State | Deposit | Withdraw | Activate | Suspend | Close | View Info |
 |-------|---------|----------|----------|---------|-------|-----------|
