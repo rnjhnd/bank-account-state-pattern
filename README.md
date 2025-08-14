@@ -24,79 +24,77 @@ This project implements the **State Design Pattern** with the following componen
 
 ## 📊 UML Class Diagram
 
-The following PlantUML diagram illustrates the architecture of the Bank Account State Manager:
+The following diagram illustrates the architecture of the Bank Account State Manager:
 
-```plantuml
-@startuml Bank Account State Pattern
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                Account                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ - String accountNumber                                                      │
+│ - double balance                                                            │
+│ - AccountState accountState                                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ + Account(String accountNumber, double balance)                            │
+│ + String getAccountNumber()                                                │
+│ + double getBalance()                                                      │
+│ + void setBalance(double balance)                                          │
+│ + AccountState getAccountState()                                           │
+│ + void setAccountState(AccountState accountState)                          │
+│ + void deposit(double amount)                                              │
+│ + void withdraw(double amount)                                             │
+│ + void suspend()                                                           │
+│ + void activate()                                                          │
+│ + void close()                                                             │
+│ + String toString()                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                        │
+                                        │ has
+                                        ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             AccountState                                   │
+│                              (Interface)                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ + void deposit(Account account, double amount)                            │
+│ + void withdraw(Account account, double amount)                           │
+│ + void suspend(Account account)                                           │
+│ + void activate(Account account)                                          │
+│ + void close(Account account)                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                        │
+                                        │ implements
+                                        │
+                    ┌───────────────────┼───────────────────┐
+                    │                   │                   │
+                    ▼                   ▼                   ▼
+┌─────────────────────────┐ ┌─────────────────────────┐ ┌─────────────────────────┐
+│      ActiveState        │ │     SuspendedState      │ │      ClosedState        │
+├─────────────────────────┤ ├─────────────────────────┤ ├─────────────────────────┤
+│ + deposit(...)          │ │ + deposit(...)          │ │ + deposit(...)          │
+│ + withdraw(...)         │ │ + withdraw(...)         │ │ + withdraw(...)         │
+│ + suspend(...)          │ │ + suspend(...)          │ │ + suspend(...)          │
+│ + activate(...)         │ │ + activate(...)         │ │ + activate(...)         │
+│ + close(...)            │ │ + close(...)            │ │ + close(...)            │
+└─────────────────────────┘ └─────────────────────────┘ └─────────────────────────┘
+         │                           │                           │
+         │                           │                           │
+         ▼                           ▼                           ▼
+    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
+    │   Can →     │           │   Can →     │           │  Terminal   │
+    │Suspended    │           │  Active     │           │   State     │
+    │   Closed    │           │   Closed    │           │ (No trans.) │
+    └─────────────┘           └─────────────┘           └─────────────┘
 
-class Account {
-  - String accountNumber
-  - double balance
-  - AccountState accountState
-  
-  + Account(String accountNumber, double balance)
-  + String getAccountNumber()
-  + double getBalance()
-  + void setBalance(double balance)
-  + AccountState getAccountState()
-  + void setAccountState(AccountState accountState)
-  + void deposit(double amount)
-  + void withdraw(double amount)
-  + void suspend()
-  + void activate()
-  + void close()
-  + String toString()
-}
-
-interface AccountState {
-  + void deposit(Account account, double amount)
-  + void withdraw(Account account, double amount)
-  + void suspend(Account account)
-  + void activate(Account account)
-  + void close(Account account)
-}
-
-class ActiveState {
-  + void deposit(Account account, double amount)
-  + void withdraw(Account account, double amount)
-  + void suspend(Account account)
-  + void activate(Account account)
-  + void close(Account account)
-}
-
-class SuspendedState {
-  + void deposit(Account account, double amount)
-  + void withdraw(Account account, double amount)
-  + void suspend(Account account)
-  + void activate(Account account)
-  + void close(Account account)
-}
-
-class ClosedState {
-  + void deposit(Account account, double amount)
-  + void withdraw(Account account, double amount)
-  + void suspend(Account account)
-  + void activate(Account account)
-  + void close(Account account)
-}
-
-class AccountTest {
-  + void main(String[] args)
-}
-
-' Relationships
-Account --> AccountState : has
-AccountState <|.. ActiveState : implements
-AccountState <|.. SuspendedState : implements
-AccountState <|.. ClosedState : implements
-AccountTest --> Account : uses
-
-' State transitions
-note right of ActiveState : Can transition to:\n- SuspendedState\n- ClosedState
-note right of SuspendedState : Can transition to:\n- ActiveState\n- ClosedState
-note right of ClosedState : Terminal state\n(no transitions)
-
-@enduml
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              AccountTest                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ + void main(String[] args)                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                        │
+                                        │ uses
+                                        ▼
+                                ┌─────────────┐
+                                │   Account   │
+                                └─────────────┘
 ```
 
 **Diagram Key:**
@@ -105,8 +103,6 @@ note right of ClosedState : Terminal state\n(no transitions)
 - **Concrete States**: ActiveState, SuspendedState, and ClosedState implementations
 - **Relationships**: Shows inheritance (implements) and composition (has) relationships
 - **State Transitions**: Notes indicate possible state transitions
-
-*Note: This diagram can be rendered using PlantUML, VS Code with PlantUML extension, or online PlantUML renderers.*
 
 ## 🚀 Features
 
