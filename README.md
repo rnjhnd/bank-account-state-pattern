@@ -28,37 +28,37 @@ The following diagram illustrates the architecture of the Bank Account State Man
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                                Account                                     │
+│                                Account                                      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ - String accountNumber                                                      │
 │ - double balance                                                            │
 │ - AccountState accountState                                                 │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ + Account(String accountNumber, double balance)                            │
-│ + String getAccountNumber()                                                │
-│ + double getBalance()                                                      │
-│ + void setBalance(double balance)                                          │
-│ + AccountState getAccountState()                                           │
-│ + void setAccountState(AccountState accountState)                          │
-│ + void deposit(double amount)                                              │
-│ + void withdraw(double amount)                                             │
-│ + void suspend()                                                           │
-│ + void activate()                                                          │
-│ + void close()                                                             │
-│ + String toString()                                                        │
+│ + Account(String accountNumber, double balance)                             │
+│ + String getAccountNumber()                                                 │
+│ + double getBalance()                                                       │
+│ + void setBalance(double balance)                                           │
+│ + AccountState getAccountState()                                            │
+│ + void setAccountState(AccountState accountState)                           │
+│ + void deposit(double amount)                                               │
+│ + void withdraw(double amount)                                              │
+│ + void suspend()                                                            │
+│ + void activate()                                                           │
+│ + void close()                                                              │
+│ + String toString()                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
                                         │
                                         │ has
                                         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                             AccountState                                   │
-│                              (Interface)                                   │
+│                             AccountState                                    │
+│                              (Interface)                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ + void deposit(Account account, double amount)                            │
-│ + void withdraw(Account account, double amount)                           │
-│ + void suspend(Account account)                                           │
-│ + void activate(Account account)                                          │
-│ + void close(Account account)                                             │
+│ + void deposit(Account account, double amount)                              │
+│ + void withdraw(Account account, double amount)                             │
+│ + void suspend(Account account)                                             │
+│ + void activate(Account account)                                            │
+│ + void close(Account account)                                               │
 └─────────────────────────────────────────────────────────────────────────────┘
                                         │
                                         │ implements
@@ -85,9 +85,9 @@ The following diagram illustrates the architecture of the Bank Account State Man
     └─────────────┘           └─────────────┘           └─────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              AccountTest                                   │
+│                              AccountTest                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ + void main(String[] args)                                                │
+│ + void main(String[] args)                                                 │
 └─────────────────────────────────────────────────────────────────────────────┘
                                         │
                                         │ uses
