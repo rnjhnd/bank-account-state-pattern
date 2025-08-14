@@ -45,9 +45,9 @@ This project implements the **State Design Pattern** with the following componen
 │ + void close()                                                              │
 │ + String toString()                                                         │
 └─────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        │ has
-                                        ▼
+                                    │
+                                    │ has
+                                    ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                             AccountState                                    │
 │                              (Interface)                                    │
@@ -58,12 +58,12 @@ This project implements the **State Design Pattern** with the following componen
 │ + void activate(Account account)                                            │
 │ + void close(Account account)                                               │
 └─────────────────────────────────────────────────────────────────────────────┘
-                                        │
-                                        │ implements
-                                        │
-                    ┌───────────────────┼───────────────────┐
-                    │                   │                   │
-                    ▼                   ▼                   ▼
+                                         │
+                                         │ implements
+                                         │
+             ┌───────────────────────────┼──────────────────────────┐
+             │                           │                          │
+             ▼                           ▼                          ▼
 ┌─────────────────────────┐ ┌─────────────────────────┐ ┌─────────────────────────┐
 │      ActiveState        │ │     SuspendedState      │ │      ClosedState        │
 ├─────────────────────────┤ ├─────────────────────────┤ ├─────────────────────────┤
@@ -73,26 +73,26 @@ This project implements the **State Design Pattern** with the following componen
 │ + activate(...)         │ │ + activate(...)         │ │ + activate(...)         │
 │ + close(...)            │ │ + close(...)            │ │ + close(...)            │
 └─────────────────────────┘ └─────────────────────────┘ └─────────────────────────┘
-         │                           │                           │
-         │                           │                           │
-         ▼                           ▼                           ▼
-    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
-    │   Can →     │           │   Can →     │           │  Terminal   │
-    │Suspended    │           │  Active     │           │   State     │
-    │   Closed    │           │   Closed    │           │ (No trans.) │
-    └─────────────┘           └─────────────┘           └─────────────┘
+            │                           │                           │
+            │                           │                           │
+            ▼                           ▼                           ▼
+     ┌─────────────┐             ┌─────────────┐             ┌─────────────┐
+     │   Can →     │             │   Can →     │             │  Terminal   │
+     │  Suspended  │             │   Active    │             │   State     │
+     │   Closed    │             │   Closed    │             │ (No trans.) │
+     └─────────────┘             └─────────────┘             └─────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              AccountTest                                    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ + void main(String[] args)                                                 │
+│ + void main(String[] args)                                                  │
 └─────────────────────────────────────────────────────────────────────────────┘
                                         │
                                         │ uses
                                         ▼
-                                ┌─────────────┐
-                                │   Account   │
-                                └─────────────┘
+                                 ┌─────────────┐
+                                 │   Account   │
+                                 └─────────────┘
 ```
 
 The following diagram illustrates:
