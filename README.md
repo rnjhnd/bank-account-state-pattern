@@ -24,8 +24,6 @@ This project implements the **State Design Pattern** with the following componen
 
 ## 📊 UML Class Diagram
 
-The following diagram illustrates the architecture of the Bank Account State Manager:
-
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                                Account                                      │
@@ -97,12 +95,14 @@ The following diagram illustrates the architecture of the Bank Account State Man
                                 └─────────────┘
 ```
 
-**Diagram Key:**
-- **Account**: The context class that maintains the current state
-- **AccountState**: Interface defining the contract for all states
-- **Concrete States**: ActiveState, SuspendedState, and ClosedState implementations
-- **Relationships**: Shows inheritance (implements) and composition (has) relationships
-- **State Transitions**: Notes indicate possible state transitions
+The following diagram illustrates:
+- The architecture of the Bank Account State Manager
+- Relationships between the core components:
+  - The `Account` context class
+  - The `AccountState` interface
+  - Concrete implementations: `ActiveState`, `SuspendedState`, `ClosedState`
+  - The test application class
+- How the State design pattern is applied in this project
 
 ## 🚀 Features
 
@@ -278,4 +278,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Note**: This implementation demonstrates clean code principles and design patterns best practices. The State pattern is particularly useful when an object's actions must adapt dynamically to its current state, making it ideal for systems with numerous states or states that evolve frequently.
+**Note**: This implementation demonstrates clean code principles and design patterns best practices. The State pattern is particularly useful for encapsulating behavior changes, making it easier to extend, maintain, and adapt systems that must respond dynamically to shifting internal conditions.
