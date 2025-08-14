@@ -24,14 +24,89 @@ This project implements the **State Design Pattern** with the following componen
 
 ## 📊 UML Class Diagram
 
-The following diagram illustrates:
-- The architecture of the Bank Account State Manager
-- Relationships between the core components:
-  - The `Account` context class
-  - The `AccountState` interface
-  - Concrete implementations: `ActiveState`, `SuspendedState`, `ClosedState`
-  - The test application class
-- How the State design pattern is applied in this project
+The following PlantUML diagram illustrates the architecture of the Bank Account State Manager:
+
+```plantuml
+@startuml Bank Account State Pattern
+
+class Account {
+  - String accountNumber
+  - double balance
+  - AccountState accountState
+  
+  + Account(String accountNumber, double balance)
+  + String getAccountNumber()
+  + double getBalance()
+  + void setBalance(double balance)
+  + AccountState getAccountState()
+  + void setAccountState(AccountState accountState)
+  + void deposit(double amount)
+  + void withdraw(double amount)
+  + void suspend()
+  + void activate()
+  + void close()
+  + String toString()
+}
+
+interface AccountState {
+  + void deposit(Account account, double amount)
+  + void withdraw(Account account, double amount)
+  + void suspend(Account account)
+  + void activate(Account account)
+  + void close(Account account)
+}
+
+class ActiveState {
+  + void deposit(Account account, double amount)
+  + void withdraw(Account account, double amount)
+  + void suspend(Account account)
+  + void activate(Account account)
+  + void close(Account account)
+}
+
+class SuspendedState {
+  + void deposit(Account account, double amount)
+  + void withdraw(Account account, double amount)
+  + void suspend(Account account)
+  + void activate(Account account)
+  + void close(Account account)
+}
+
+class ClosedState {
+  + void deposit(Account account, double amount)
+  + void withdraw(Account account, double amount)
+  + void suspend(Account account)
+  + void activate(Account account)
+  + void close(Account account)
+}
+
+class AccountTest {
+  + void main(String[] args)
+}
+
+' Relationships
+Account --> AccountState : has
+AccountState <|.. ActiveState : implements
+AccountState <|.. SuspendedState : implements
+AccountState <|.. ClosedState : implements
+AccountTest --> Account : uses
+
+' State transitions
+note right of ActiveState : Can transition to:\n- SuspendedState\n- ClosedState
+note right of SuspendedState : Can transition to:\n- ActiveState\n- ClosedState
+note right of ClosedState : Terminal state\n(no transitions)
+
+@enduml
+```
+
+**Diagram Key:**
+- **Account**: The context class that maintains the current state
+- **AccountState**: Interface defining the contract for all states
+- **Concrete States**: ActiveState, SuspendedState, and ClosedState implementations
+- **Relationships**: Shows inheritance (implements) and composition (has) relationships
+- **State Transitions**: Notes indicate possible state transitions
+
+*Note: This diagram can be rendered using PlantUML, VS Code with PlantUML extension, or online PlantUML renderers.*
 
 ## 🚀 Features
 
@@ -207,4 +282,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Note**: This implementation demonstrates clean code principles and design patterns best practices. The State pattern is particularly useful when an object's behavior depends on its state and the number of states is large or frequently changing.
+**Note**: This implementation demonstrates clean code principles and design patterns best practices. The State pattern is particularly useful when an object's actions must adapt dynamically to its current state, making it ideal for systems with numerous states or states that evolve frequently.
